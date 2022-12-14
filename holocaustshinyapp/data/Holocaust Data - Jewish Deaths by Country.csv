@@ -1,0 +1,46 @@
+country,number,type,,"""country"",","number,","""type"",",,year_counted,"""year_counted"","
+Poland,"3,400,000",pre_war_pop,,"""Poland"",","3400000,","""pre_war_pop"",",,1939,"""1939"","
+Soviet Union,"3,000,000",pre_war_pop,,"""Soviet Union"",","3000000,","""pre_war_pop"",",,1939,"""1939"","
+Romania,"757,000",pre_war_pop,,"""Romania"",","757000,","""pre_war_pop"",",,1930,"""1930"","
+Germany ,"500,000",pre_war_pop,,"""Germany "",","500000,","""pre_war_pop"",",,1933,"""1933"","
+Hungary,"445,000",pre_war_pop,,"""Hungary"",","445000,","""pre_war_pop"",",,1930,"""1930"","
+Czechoslovakia,"357,000",pre_war_pop,,"""Czechoslovakia"",","357000,","""pre_war_pop"",",,1930,"""1930"","
+France,"300,000",pre_war_pop,,"""France"",","300000,","""pre_war_pop"",",,1940,"""1940"","
+Austria,"206,000",pre_war_pop,,"""Austria"",","206000,","""pre_war_pop"",",,1938,"""1938"","
+Lithuania,"150,000",pre_war_pop,,"""Lithuania"",","150000,","""pre_war_pop"",",,1939,"""1939"","
+Netherlands,"140,000",pre_war_pop,,"""Netherlands"",","140000,","""pre_war_pop"",",,1941,"""1941"","
+Latvia,"93,500",pre_war_pop,,"""Latvia"",","93500,","""pre_war_pop"",",,1939,"""1939"","
+Belgium,"90,000",pre_war_pop,,"""Belgium"",","90000,","""pre_war_pop"",",,1940,"""1940"","
+Greece,"70,000",pre_war_pop,,"""Greece"",","70000,","""pre_war_pop"",",,1940,"""1940"","
+Yugoslavi,"68,500",pre_war_pop,,"""Yugoslavi"",","68500,","""pre_war_pop"",",,1930,"""1930"","
+Bulgaria,"48,400",pre_war_pop,,"""Bulgaria"",","48400,","""pre_war_pop"",",,1934,"""1934"","
+Italy,"46,000",pre_war_pop,,"""Italy"",","46000,","""pre_war_pop"",",,1938,"""1938"","
+Denmark,"7,800",pre_war_pop,,"""Denmark"",","7800,","""pre_war_pop"",",,1940,"""1940"","
+Estonia,"4,300",pre_war_pop,,"""Estonia"",","4300,","""pre_war_pop"",",,1934,"""1934"","
+Luxembourg,"3,600",pre_war_pop,,"""Luxembourg"",","3600,","""pre_war_pop"",",,1940,"""1940"","
+Finland,"2,200",pre_war_pop,,"""Finland"",","2200,","""pre_war_pop"",",,1942,"""1942"","
+Norway,"1,800",pre_war_pop,,"""Norway"",","1800,","""pre_war_pop"",",,1940,"""1940"","
+Albania,200,pre_war_pop,,"""Albania"",","200,","""pre_war_pop"",",,1930,"""1930"","
+Poland,"3,000,000",murdered_jews,,"""Poland"",","3000000,","""murdered_jews"",",,,
+Soviet Union,"1,000,000",murdered_jews,,"""Soviet Union"",","1000000,","""murdered_jews"",",,,
+Romania,"287,000",murdered_jews,,"""Romania"",","287000,","""murdered_jews"",",,,
+Germany ,"165,000",murdered_jews,,"""Germany "",","165000,","""murdered_jews"",",,,
+Hungary,"270,000",murdered_jews,,"""Hungary"",","270000,","""murdered_jews"",",,,
+Czechoslovakia,"260,000",murdered_jews,,"""Czechoslovakia"",","260000,","""murdered_jews"",",,,
+France,"76,000",murdered_jews,,"""France"",","76000,","""murdered_jews"",",,,
+Austria,"65,000",murdered_jews,,"""Austria"",","65000,","""murdered_jews"",",,,
+Lithuania,"145,000",murdered_jews,,"""Lithuania"",","145000,","""murdered_jews"",",,,
+Netherlands,"102,000",murdered_jews,,"""Netherlands"",","102000,","""murdered_jews"",",,,
+Latvia,"70,000",murdered_jews,,"""Latvia"",","70000,","""murdered_jews"",",,,
+Belgium,"25,000",murdered_jews,,"""Belgium"",","25000,","""murdered_jews"",",,,
+Greece,"58,800",murdered_jews,,"""Greece"",","58800,","""murdered_jews"",",,,
+Yugoslavi,"60,000",murdered_jews,,"""Yugoslavi"",","60000,","""murdered_jews"",",,,
+Bulgaria,142,murdered_jews,,"""Bulgaria"",","142,","""murdered_jews"",",,,
+Italy,"7,500",murdered_jews,,"""Italy"",","7500,","""murdered_jews"",",,,
+Denmark,116,murdered_jews,,"""Denmark"",","116,","""murdered_jews"",",,,
+Estonia,"1,000",murdered_jews,,"""Estonia"",","1000,","""murdered_jews"",",,,
+Luxembourg,"1,200",murdered_jews,,"""Luxembourg"",","1200,","""murdered_jews"",",,,
+Finland,7,murdered_jews,,"""Finland"",","7,","""murdered_jews"",",,,
+Norway,758,murdered_jews,,"""Norway"",","758,","""murdered_jews"",",,,
+Albania,100,murdered_jews,,"""Albania"",","100,","""murdered_jews"",",,,
+Source: https://www.statista.com/statistics/1070564/jewish-populations-deaths-by-country/,,,,,,,,,
