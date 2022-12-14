@@ -3,6 +3,7 @@ library(shiny)
 library(tidyverse)
 library(readr)
 library(janitor)
+library(shinythemes)
 
 options(scipen = 100)
 
@@ -822,8 +823,9 @@ population_graph_no_war <- ggplot()+
     #geom_line(data = world_jewish_population_2021, aes(x= year, y = population, color = "red"))+
     labs(x="Year", y="Jewish Population", title="Calculated Jewish Population (1880-2021)")
 
-ui <- fluidPage(
+ui <- fluidPage(theme = shinytheme("slate"),
     titlePanel(h1("The Past is The Present and The Future: Visualizing Holocaust Data")),
+
     #h4("What was the Holocaust?"),
     #h5("The Holocaust was the systematic and deliberate extermination of European Jewery by the Nazi party. Between 1939 and 1945, 6 million Jewish people were murdered."),
     br(),
@@ -982,6 +984,7 @@ ui <- fluidPage(
 
 
         )
+
     )
 
 
