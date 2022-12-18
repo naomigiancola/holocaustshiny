@@ -1,6 +1,8 @@
-# holocaustshiny
+# Welcome to the code that create the Holocaust Shiny App
 
-This is the GitHub respoitory for the website to visualize Holocaust data. 
+## The website can be reached by going to this URl: https://naomigiancola01.shinyapps.io/holocaustshinyapp/
 
 
-The website can be reached vis this link: https://naomigiancola01.shinyapps.io/holocaustshinyapp/
+In this repository you will find the holocaustshiny folder. 
+
+It contains a data folder in the main folder and the code for the shiny app in app.R. You will also find the folder: rsconnect/shinyapps.io/naomigiancola01. This is the code that publishes the website.
