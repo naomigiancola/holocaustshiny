@@ -1,9 +1,9 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# Welcome to the code that creates the Holocaust shiny app
+# <img src="hex-Visualizing_Holocaust_Data.png" align="right" height=140/>
 
-# <img src="hex-Visualizing_Holocaust_Data" align="right" height=140/>
+# Welcome to the code that creates the Holocaust shiny app
 
 ## The website can be reached by going to this URl: <https://naomigiancola01.shinyapps.io/holocaustshinyapp/>
 
