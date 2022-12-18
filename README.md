@@ -3,7 +3,7 @@
 
 # Welcome to the code that creates the Holocaust shiny app
 
-# <img src="data/hex-Visualizing_Holocaust_Data" align="right" height=140/>
+# <img src="hex-Visualizing_Holocaust_Data" align="right" height=140/>
 
 ## The website can be reached by going to this URl: <https://naomigiancola01.shinyapps.io/holocaustshinyapp/>
 
