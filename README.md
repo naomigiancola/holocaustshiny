@@ -3,6 +3,6 @@
 ## The website can be reached by going to this URl: https://naomigiancola01.shinyapps.io/holocaustshinyapp/
 
 
-In this repository you will find the holocaustshiny folder. 
+In this repository you will find the holocaustshiny folder. It contains a data folder in the main folder and the code for the shiny app in app.R. 
 
-It contains a data folder in the main folder and the code for the shiny app in app.R. You will also find the folder: rsconnect/shinyapps.io/naomigiancola01. This is the code that publishes the website.
+You will also find the folder: rsconnect/shinyapps.io/naomigiancola01. This is the code that publishes the website.
