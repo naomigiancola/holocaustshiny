@@ -4,6 +4,7 @@ library(tidyverse)
 library(readr)
 library(janitor)
 library(shinythemes)
+library(plotly)
 
 options(scipen = 100)
 
@@ -11,8 +12,76 @@ options(scipen = 100)
 
 world_jewish_population<- data.frame(year = c(1880,1900,1914,1922,1925,1931,1939,1945,1948,1950,1955,1960,1970,1980,1990,2000,2005,2010,2015,2018,2019,2020,2021),
 
-                           jewish_population_of_the_world = c(7800000,10600000,13500000,14400000,14800000,15700000,16728000,11000000,11500000,11297000,11800000,12079000,12585000,12819000,12868000,13250000,13620000,14049000,14551600,14606000,14707400,15077100,15166200))
-    #Source: https://www.jewishvirtuallibrary.org/jewish-population-of-the-world#A
+                                     jewish_population_of_the_world = c(7800000,10600000,13500000,14400000,14800000,15700000,16728000,11000000,11500000,11297000,11800000,12079000,12585000,12819000,12868000,13250000,13620000,14049000,14551600,14606000,14707400,15077100,15166200))
+#Source: https://www.jewishvirtuallibrary.org/jewish-population-of-the-world#A
+
+jewish_alive_percent <- data.frame(country = c("Albania",
+                                               "Austria",
+                                               "Belgium",
+                                               "Bulgaria",
+                                               "Czechoslovakia/Czech Republic,",
+                                               "Denmark",
+                                               "Estonia",
+                                               "Finland",
+                                               "France",
+                                               "Germany",
+                                               "Greece",
+                                               "Hungary",
+                                               "Italy",
+                                               "Latvia",
+                                               "Lithuania",
+                                               "Luxembourg",
+                                               "Netherlands",
+                                               "Norway",
+                                               "Poland",
+                                               "Romania",
+                                               "Soviet Union/Russia,",
+                                               "Yugoslavia"),
+                                   current_population = c(50,
+                                                          10300,
+                                                          28900,
+                                                          2000,
+                                                          3900,
+                                                          6400,
+                                                          2500,
+                                                          1300,
+                                                          446000,
+                                                          118000,
+                                                          4100,
+                                                          46800,
+                                                          27200,
+                                                          4300,
+                                                          2300,
+                                                          700,
+                                                          29700,
+                                                          1300,
+                                                          4500,
+                                                          8800,
+                                                          150000,
+                                                          4350),
+                                   percent_of_pre_war = c("25%",
+                                                          "5%",
+                                                          "32.11%",
+                                                          "4.13%",
+                                                          "1.09%",
+                                                          "82.05%",
+                                                          "58.14%",
+                                                          "59.09%",
+                                                          "148.67%",
+                                                          "23.6%",
+                                                          "5.86%",
+                                                          "10.52%",
+                                                          "59.13%",
+                                                          "4.6%",
+                                                          "1.53%",
+                                                          "19.44%",
+                                                          "21.21%",
+                                                          "72.22%",
+                                                          "0.13%",
+                                                          "1.16%",
+                                                          "5%",
+                                                          "6.35%")
+)
 
 jewish_deaths <- data.frame(country = c("Poland",
                                         "Soviet Union/Russia",
@@ -81,27 +150,27 @@ jewish_deaths <- data.frame(country = c("Poland",
                                             1800,
                                             200),
                             murdered_jews = c(3000000,
-                                          1000000,
-                                          287000,
-                                          165000,
-                                          270000,
-                                          260000,
-                                          76000,
-                                          65000,
-                                          145000,
-                                          102000,
-                                          70000,
-                                          25000,
-                                          58800,
-                                          60000,
-                                          142,
-                                          7500,
-                                          116,
-                                          1000,
-                                          1200,
-                                          7,
-                                          758,
-                                          100))
+                                              1000000,
+                                              287000,
+                                              165000,
+                                              270000,
+                                              260000,
+                                              76000,
+                                              65000,
+                                              145000,
+                                              102000,
+                                              70000,
+                                              25000,
+                                              58800,
+                                              60000,
+                                              142,
+                                              7500,
+                                              116,
+                                              1000,
+                                              1200,
+                                              7,
+                                              758,
+                                              100))
 # Source: https://encyclopedia.ushmm.org/content/en/article/jewish-losses-during-the-holocaust-by-country, https://www.statista.com/statistics/1070564/jewish-populations-deaths-by-country/
 jewish_deaths <- jewish_deaths %>%
     mutate(percent_killed = murdered_jews/pre_war_pop) %>%
@@ -239,9 +308,9 @@ jewish_deaths_tidy <- data.frame(country = c("Poland",
                                           "murdered_jews",
                                           "murdered_jews",
                                           "murdered_jews")
-                                 )
+)
 
-    # Source: https://www.statista.com/statistics/1070564/jewish-populations-deaths-by-country/
+# Source: https://www.statista.com/statistics/1070564/jewish-populations-deaths-by-country/
 
 
 current_jewish_populations <- data.frame(country = c("Bermuda",
@@ -679,6 +748,21 @@ population_graph <- ggplot(data = world_jewish_population, aes(x = year, y = jew
     geom_line()+
     labs(x="Year", y="Jewish Population", title="Jewish Population by Year (1880 - 2021)")
 
+death_graph_percent <- ggplot(data = jewish_deaths, aes(x =country , y = percent_killed, fill = "black"))+
+    geom_col(position = "dodge")+
+    scale_fill_manual(values = c("black"))+
+    labs(x="Country", y="Percent", title="Percent of Jewish people killed during the Holocaust")+
+    theme(axis.text.x = element_text(angle = 90))+
+    theme(legend.position = "none")
+
+death_graph <- ggplot(data = jewish_deaths_tidy, aes(x = country , y = number, fill = type))+
+    geom_col(position = "dodge")+
+    scale_fill_manual(values=c("red", "black"))+
+    labs(x="Country", y="Jewish People", title="Jewish Deaths Compared to pre-war Population (1939)", fill = "Type of population")+
+    theme(axis.text.x = element_text(angle = 90))
+
+
+
 # Functions:
 
 current_jewish_population <- function(country_name){
@@ -697,8 +781,11 @@ current_jewish_population_text <- function(country_name){
         select(country, jewish_population)
     jewish_population_2021_user <- jewish_population_2021_user %>%
         mutate(jewish_population = as.character(jewish_population))
+    population <- jewish_population_2021_user$jewish_population
+    population <-prettyNum(population, big.mark = ",", scientific = FALSE)
 
-    print(paste("The Jewish population of", country_name, "is", jewish_population_2021_user$jewish_population, "."))
+
+    print(paste("The Jewish population of", country_name, "is", population, "."))
 }
 
 percent_jewish_killed <- function(country_name) {
@@ -708,6 +795,8 @@ percent_jewish_killed <- function(country_name) {
     year <- jewish_deaths$year_counted
     jews_killed <- jewish_deaths$murdered_jews
     percent_killed <- jewish_deaths$percent_killed
+    jews_killed  <-prettyNum(jews_killed , big.mark = ",", scientific = FALSE)
+    pre_war <-prettyNum(pre_war, big.mark = ",", scientific = FALSE)
     print(paste("In", year, "there were", pre_war, "Jewish people living in", country_name,". During the war,", jews_killed, "Jewish people were killed,", percent_killed, "% of the pre-war population."))
 }
 
@@ -715,9 +804,11 @@ graph_jewish_killed <- function(country_name){
 
     jewish_deaths_tidy <- jewish_deaths_tidy %>%
         filter(country == country_name)
-    graph <- ggplot(data = jewish_deaths_tidy, aes(x = type, y= number))+
+    graph <- ggplot(data = jewish_deaths_tidy, aes(x = type, y= number, fill = type))+
         geom_bar(stat = "identity")+
-        labs(y = "Jewish People", x = "", title = "Jews murdered during the war compared to Jews alive before the war")
+        labs(y = "Jewish People", x = "", title = "Jews murdered during the war compared to Jews alive before the war")+
+        scale_fill_manual(values=c("red", "black"))
+
     return(graph)
 }
 
@@ -727,6 +818,8 @@ percent_jewish_alive <- function(country_name) {
         current_pop = 2500
         pre_war = 4300
         percent <- current_pop/pre_war*100
+        current_pop <-prettyNum(current_pop, big.mark = ",", scientific = FALSE)
+        pre_war <-prettyNum(pre_war, big.mark = ",", scientific = FALSE)
         percent <- round(percent, 2)
         print(paste("The current Jewish population of", country_name, "is", current_pop, ",", percent, "% of the pre-war population (", pre_war, ")."))
 
@@ -734,6 +827,8 @@ percent_jewish_alive <- function(country_name) {
         current_pop = 50
         pre_war = 200
         percent <- current_pop/pre_war*100
+        current_pop <-prettyNum(current_pop, big.mark = ",", scientific = FALSE)
+        pre_war <-prettyNum(pre_war, big.mark = ",", scientific = FALSE)
         percent <- round(percent, 2)
         print(paste("The current Jewish population (2019) of", country_name, "is", current_pop, ",", percent, "% of the pre-war population (", pre_war, ")."))
 
@@ -741,13 +836,17 @@ percent_jewish_alive <- function(country_name) {
         current_pop = 4350
         pre_war = 68500
         percent <- current_pop/pre_war*100
+        current_pop <-prettyNum(current_pop, big.mark = ",", scientific = FALSE)
+        pre_war <-prettyNum(pre_war, big.mark = ",", scientific = FALSE)
         percent <- round(percent, 2)
-        print(paste("The current Jewish population of", country_name, "is", current_pop, ",", percent, "% of the pre-war population (", pre_war, ").", "*Yugoslovia dissolved in 1992, so the current Jewish population of Yugoslavia is made up of populations from Seriba, Croatia, Bosnia and Herzegovina, Macedonia, Montenegro, Slovenia, and Kosovo "))
+        print(paste("The current Jewish population of", country_name, "is", current_pop, ",", percent, "% of the pre-war population (", pre_war, ").", "*Yugoslovia dissolved in 1992, so the current Jewish population of Yugoslavia is made up of populations from Seriba, Croatia, Bosnia and Herzegovina, Macedonia, Montenegro, Slovenia, and Kosovo."))
 
     }else if (country_name == "Czechoslovakia/Czech Republic") {
         current_pop = 3900
         pre_war = 357000
         percent <- current_pop/pre_war*100
+        current_pop <-prettyNum(current_pop, big.mark = ",", scientific = FALSE)
+        pre_war <-prettyNum(pre_war, big.mark = ",", scientific = FALSE)
         percent <- round(percent, 2)
         print(paste("The current Jewish population (2021) of", country_name, "is", current_pop, ",", percent, "% of the pre-war population (", pre_war, ")."))
 
@@ -757,16 +856,18 @@ percent_jewish_alive <- function(country_name) {
         pre_war <- jewish_deaths$pre_war_pop
         year <- jewish_deaths$year_counted
         current_pop <- current_jewish_population(country_name)
-    current_pop <-current_pop$jewish_population
-    current_pop <- as.numeric(current_pop)
-    percent <- (current_pop/pre_war) *100
-    percent <- round(percent, 2)
-    print(paste("The current Jewish population (2021) of", country_name, "is", current_pop, ",", percent, "% of the pre-war population (", pre_war, ")"))
+        current_pop <-current_pop$jewish_population
+        current_pop = as.numeric(current_pop)
+        percent <- (current_pop/pre_war) *100
+        current_pop <-prettyNum(current_pop, big.mark = ",", scientific = FALSE)
+        pre_war <-prettyNum(pre_war, big.mark = ",", scientific = FALSE)
+        percent <- round(percent, 2)
+        print(paste("The current Jewish population (2021) of", country_name, "is", current_pop, ",", percent, "% of the pre-war population (", pre_war, ")"))
     }
 
 
 
-    }
+}
 
 
 
@@ -813,197 +914,230 @@ percent_jewish_alive <- function(country_name) {
 
 jewish_no_war <- data.frame(year = c(1880,1900,1914,1922,1925,1931,1939,1949,1959,1969,1979,1989,1999,2009,2019,2021),
                             population = c(7800000,10600000,13500000,14400000,14800000,15700000,16728000,18241220,19754440,21267660,22780880,24294100,25807320,27320540,28833760, 29136404)
-                            )
+)
 
 world_jewish_population_2021 <- world_jewish_population %>%
     filter(year == 2021)
 
 population_graph_no_war <- ggplot()+
     geom_line(data = jewish_no_war, aes(x= year, y = population) )+
-    #geom_line(data = world_jewish_population_2021, aes(x= year, y = population, color = "red"))+
     labs(x="Year", y="Jewish Population", title="Calculated Jewish Population (1880-2021)")
 
+
+
 ui <- fluidPage(theme = shinytheme("slate"),
-    titlePanel(h1("The Past is The Present and The Future: Visualizing Holocaust Data")),
+                titlePanel(h1("The Past is The Present and The Future: Visualizing Holocaust Data")),
+                sidebarLayout(
+                    sidebarPanel(width = 6,
+                                 title = strong("Home"),
+                                 plotlyOutput("population_graph"),
+                                 br(),
+                                 h4(strong("If the Holocaust hadn't happened and population trends had continued as they were from 1880-1939, the Jewish world population could have been 29,136,404 in 2021.")),
+                                 h4(strong("Instead, it is 15,166,200 in 2021.")),
+                                 h4(strong("A difference of 13,970,204.")),
+                                 plotlyOutput("population_graph_no_war"),
+                                 br()
+                    ),
+                    mainPanel( width = 6,
+                        tabsetPanel(
+                            tabPanel( title = strong("World + European Data"),
+                                      br(),
+                                      h4("Find the Jewish population for (almost) any country as of 2021:"),
+                                      selectInput("country_name", "", c("Argentina",
+                                                                        "Armenia",
+                                                                        "Australia",
+                                                                        "Austria",
+                                                                        "Azerbaijan",
+                                                                        "Bahamas",
+                                                                        "Belarus",
+                                                                        "Belgium",
+                                                                        "Bermuda",
+                                                                        "Bolivia",
+                                                                        "Bosnia-Herzegovina",
+                                                                        "Botswana",
+                                                                        "Brazil",
+                                                                        "Bulgaria",
+                                                                        "Canada",
+                                                                        "Channel Islands",
+                                                                        "Chile",
+                                                                        "China",
+                                                                        "Colombia",
+                                                                        "Congo D.R.",
+                                                                        "Costa Rica",
+                                                                        "Croatia",
+                                                                        "Cuba",
+                                                                        "Cyprus",
+                                                                        "Czechoslovakia/Czech Republic",
+                                                                        "Denmark",
+                                                                        "Dominican Republic",
+                                                                        "Ecuador",
+                                                                        "Egypt",
+                                                                        "El Salvador",
+                                                                        "Ethiopia",
+                                                                        "Finland",
+                                                                        "France",
+                                                                        "Georgia",
+                                                                        "Germany",
+                                                                        "Gibraltar",
+                                                                        "Greece",
+                                                                        "Guatemala",
+                                                                        "Hungary",
+                                                                        "India",
+                                                                        "Indonesia",
+                                                                        "Iran",
+                                                                        "Ireland",
+                                                                        "Israel",
+                                                                        "Italy",
+                                                                        "Jamaica",
+                                                                        "Japan",
+                                                                        "Kazakhstan",
+                                                                        "Kenya",
+                                                                        "Kyrgyzstan",
+                                                                        "Latvia",
+                                                                        "Lithuania",
+                                                                        "Luxembourg",
+                                                                        "Madagascar",
+                                                                        "Malta",
+                                                                        "Mexico",
+                                                                        "Moldova",
+                                                                        "Monaco",
+                                                                        "Morocco",
+                                                                        "Namibia",
+                                                                        "Netherlands",
+                                                                        "Netherlands Antilles",
+                                                                        "New Zealand",
+                                                                        "Nigeria",
+                                                                        "North Macedonia",
+                                                                        "Norway",
+                                                                        "Panama",
+                                                                        "Paraguay",
+                                                                        "Peru",
+                                                                        "Philippines",
+                                                                        "Poland",
+                                                                        "Portugal",
+                                                                        "Puerto Rico",
+                                                                        "Romania",
+                                                                        "Soviet Union/Russia",
+                                                                        "Serbia",
+                                                                        "Singapore",
+                                                                        "Slovakia",
+                                                                        "Slovenia",
+                                                                        "South Africa",
+                                                                        "South Korea",
+                                                                        "Spain",
+                                                                        "Suriname",
+                                                                        "Sweden",
+                                                                        "Switzerland",
+                                                                        "Syria and Lebanon",
+                                                                        "Taiwan",
+                                                                        "Thailand",
+                                                                        "Tunisia",
+                                                                        "Turkey",
+                                                                        "Turkmenistan",
+                                                                        "U.K.",
+                                                                        "Ukraine",
+                                                                        "United Arab Emirates",
+                                                                        "United States",
+                                                                        "Uruguay",
+                                                                        "Uzbekistan",
+                                                                        "Venezuela",
+                                                                        "Virgin Islands",
+                                                                        "West Bank",
+                                                                        "Zimbabwe")),
+                                      actionButton("go_country_pop", "Go"),
+                                      h4(strong(textOutput("pop_sentence"))),
+                                      br(),
+                                      br(),
+                                      h4("See detailed information about European countries:"),
 
-    #h4("What was the Holocaust?"),
-    #h5("The Holocaust was the systematic and deliberate extermination of European Jewery by the Nazi party. Between 1939 and 1945, 6 million Jewish people were murdered."),
-    br(),
-    sidebarLayout(
-        sidebarPanel(plotOutput("population_graph"),
-                     br(),
-                     h4("If the Holocaust hadn't happened and population trends had continued at they were from 1880-1939, the Jewish world population could have been 29,136,404 in 2021."),
-                     h4("Instead, it is 15,166,200 in 2021."),
-                     h4("A difference of 13,970,204."),
-                     plotOutput("population_graph_no_war"),
-                     br()
-                     ),
-        mainPanel(
-            h4("See Detailed information about European Countries:"),
-
-            selectInput("country_name_killed", "", c("Poland",
-                                                            "Soviet Union/Russia",
-                                                            "Romania",
-                                                            "Germany",
-                                                            "Hungary",
-                                                            "Czechoslovakia/Czech Republic",
-                                                            "France",
-                                                            "Austria",
-                                                            "Lithuania",
-                                                            "Netherlands",
-                                                            "Latvia",
-                                                            "Belgium",
-                                                            "Greece",
-                                                            "Yugoslavia",
-                                                            "Bulgaria",
-                                                            "Italy",
-                                                            "Denmark",
-                                                            "Estonia",
-                                                            "Luxembourg",
-                                                            "Finland",
-                                                            "Norway",
-                                                            "Albania" ) ),
-            actionButton("go_jews_killed", "Go"),
-            br(),
-            h4(strong(textOutput("jews_killed_text"))),
-            plotOutput("jews_killed_graph"),
-            h4(strong(strong(textOutput("percent_jewish_alive_text")))),
-            br(),
-            br(),
-            h4("Find the Jewish population for (almost) any country as of 2021:"),
-            selectInput("country_name", "", c("Bermuda",
-                                                      "Canada",
-                                                      "United States",
-                                                      "Bahamas",
-                                                      "Costa Rica",
-                                                      "Cuba",
-                                                      "Dominican Republic",
-                                                      "El Salvador",
-                                                      "Guatemala",
-                                                      "Jamaica",
-                                                      "Mexico",
-                                                      "Netherlands Antilles",
-                                                      "Panama",
-                                                      "Puerto Rico",
-                                                      "Virgin Islands",
-                                                      "Argentina",
-                                                      "Bolivia",
-                                                      "Brazil",
-                                                      "Chile",
-                                                      "Colombia",
-                                                      "Ecuador",
-                                                      "Paraguay",
-                                                      "Peru",
-                                                      "Suriname",
-                                                      "Uruguay",
-                                                      "Venezuela",
-                                                      "Other",
-                                                      "Israel",
-                                                      "West Bank",
-                                                      "Armenia",
-                                                      "Azerbaijan",
-                                                      "Georgia",
-                                                      "Kazakhstan",
-                                                      "Kyrgyzstan",
-                                                      "Turkmenistan",
-                                                      "Uzbekistan",
-                                                      "China",
-                                                      "India",
-                                                      "Indonesia",
-                                                      "Iran",
-                                                      "Japan",
-                                                      "South Korea",
-                                                      "Philippines",
-                                                      "Singapore",
-                                                      "Syria and Lebanon",
-                                                      "Taiwan",
-                                                      "Thailand",
-                                                      "United Arab Emirates",
-                                                      "Other",
-                                                      "Australia",
-                                                      "New Zealand",
-                                                      "Other",
-                                                      "Egypt",
-                                                      "Ethiopia",
-                                                      "Morocco",
-                                                      "Tunisia",
-                                                      "Botswana",
-                                                      "Congo D.R.",
-                                                      "Kenya",
-                                                      "Madagascar",
-                                                      "Namibia",
-                                                      "Nigeria",
-                                                      "South Africa",
-                                                      "Zimbabwe",
-                                                      "Other",
-                                                      "Austria",
-                                                      "Belgium",
-                                                      "Bulgaria",
-                                                      "Czechoslovakia/Czech Republic",
-                                                      "Croatia",
-                                                      "Cyprus",
-                                                      "Czechoslovakia/Czech Republic",
-                                                      "Denmark",
-                                                      "Finland",
-                                                      "France",
-                                                      "Germany",
-                                                      "Greece",
-                                                      "Hungary",
-                                                      "Ireland",
-                                                      "Italy",
-                                                      "Latvia",
-                                                      "Lithuania",
-                                                      "Luxembourg",
-                                                      "Malta",
-                                                      "Netherlands",
-                                                      "Poland",
-                                                      "Portugal",
-                                                      "Romania",
-                                                      "Slovakia",
-                                                      "Slovenia",
-                                                      "Spain",
-                                                      "Sweden",
-                                                      "Bosnia-Herzegovina",
-                                                      "Channel Islands",
-                                                      "Gibraltar",
-                                                      "Monaco",
-                                                      "North Macedonia",
-                                                      "Norway",
-                                                      "Serbia",
-                                                      "Switzerland",
-                                                      "Turkey",
-                                                      "U.K.",
-                                                      "Other",
-                                                      "Belarus",
-                                                      "Moldova",
-                                                      "Soviet Union/Russia",
-                                                      "Ukraine")),
-            actionButton("go_country_pop", "Go"),
-            h4(strong(textOutput("pop_sentence"))),
-            #tableOutput("pop_table")
+                                      selectInput("country_name_killed", "", c("Albania",
+                                                                               "Austria",
+                                                                               "Belgium",
+                                                                               "Bulgaria",
+                                                                               "Czechoslovakia/Czech Republic",
+                                                                               "Denmark",
+                                                                               "Estonia",
+                                                                               "Finland",
+                                                                               "France",
+                                                                               "Germany",
+                                                                               "Greece",
+                                                                               "Hungary",
+                                                                               "Italy",
+                                                                               "Latvia",
+                                                                               "Lithuania",
+                                                                               "Luxembourg",
+                                                                               "Netherlands",
+                                                                               "Norway",
+                                                                               "Poland",
+                                                                               "Romania",
+                                                                               "Soviet Union/Russia",
+                                                                               "Yugoslavia") ),
+                                      actionButton("go_jews_killed", "Go"),
+                                      br(),
+                                      br(),
+                                      h4(strong(textOutput("jews_killed_text"))),
+                                      br(),
+                                      plotlyOutput("jews_killed_graph"),
+                                      br(),
+                                      h4(strong(strong(textOutput("percent_jewish_alive_text")))),
+                                      br()),
+                             tabPanel(title = strong("European Data"),
+                                      br(),
+                                      br(),
+                                      plotlyOutput("death_graph_percent"),
+                                      br(),
+                                      br(),
+                                      plotlyOutput("death_graph"),
+                                      br(),
+                                      br(),
+                                      h4(strong("The number of Jewish people living in a European country (as of 2021) as a percent of the pre-war population:")),
+                                      br(),
+                                      tableOutput("population_percent_table")
 
 
-        )
+                            ),
+                            tabPanel(title = strong("Sources"),
+                                     br(),
+                                     a("Jewish Virtual Library:", href = "https://www.jewishvirtuallibrary.org/"),
+                                     br(),
+                                     br(),
+                                     a("Historical Jewish Population", href = "https://www.jewishvirtuallibrary.org/jewish-population-of-the-world#A"),
+                                     br(),
+                                     a("Jewish Populations in 2021", href = "https://www.jewishvirtuallibrary.org/jewish-population-of-the-world#A"),
+                                     br(),
+                                     br(),
+                                     br(),
+                                     a("US Holocaust Memorial Museum (USHMM):", href = "https://encyclopedia.ushmm.org/en"),
+                                     br(),
+                                     br(),
+                                     a("Jewish Deaths by Country", href = "https://encyclopedia.ushmm.org/content/en/article/jewish-losses-during-the-holocaust-by-country"),
+                                     br(),
+                                     a("Statista Extraction of USHMM data", href = "https://www.statista.com/statistics/1070564/jewish-populations-deaths-by-country/")
+                                     )
 
-    )
+                        )))
+
 
 
 )
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
-    output$population_graph <- renderPlot(population_graph)
-    output$population_graph_no_war <- renderPlot(population_graph_no_war)
+    output$death_graph_percent <- renderPlotly({death_graph_percent})
+    output$death_graph <- renderPlotly({death_graph})
+    output$population_graph <- renderPlotly(population_graph)
+    output$population_graph_no_war <- renderPlotly(population_graph_no_war)
+    output$population_percent_table <- renderTable(jewish_alive_percent)
     observeEvent(input$go_country_pop, {
         name_of_country <- reactive({input$country_name})
         output$pop_table = renderTable({current_jewish_population(name_of_country())}
         )
         output$pop_sentence = renderText(current_jewish_population_text(name_of_country()))}
-                 )
+    )
     observeEvent(input$go_jews_killed, {
         county_name_killed <- reactive({input$country_name_killed})
         output$jews_killed_text = renderText({percent_jewish_killed(county_name_killed())})
-        output$jews_killed_graph = renderPlot({graph_jewish_killed(county_name_killed())})
+        output$jews_killed_graph = renderPlotly({graph_jewish_killed(county_name_killed())})
         output$percent_jewish_alive_text = renderText({percent_jewish_alive(county_name_killed())})
 
     })

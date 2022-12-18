@@ -1,0 +1,11 @@
+---
+title: "README"
+author: "Naomi Giancola"
+date: "2022-12-18"
+output: html_document
+---
+
+This is the GitHub respoitory for the website to visualize Holocaust data. 
+
+
+The website can be reached vis this link: https://naomigiancola01.shinyapps.io/holocaustshinyapp/
