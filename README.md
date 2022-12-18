@@ -1,4 +1,4 @@
-# Welcome to the code that create the Holocaust Shiny App
+# Welcome to the code that creates the Holocaust Shiny App
 
 ## The website can be reached by going to this URl: https://naomigiancola01.shinyapps.io/holocaustshinyapp/
 
