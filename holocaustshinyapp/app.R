@@ -8,7 +8,7 @@ library(plotly)
 
 options(scipen = 100)
 
-#Loading Data sets
+#Creating Data sets
 
 world_jewish_population<- data.frame(year = c(1880,1900,1914,1922,1925,1931,1939,1945,1948,1950,1955,1960,1970,1980,1990,2000,2005,2010,2015,2018,2019,2020,2021),
 
@@ -742,7 +742,14 @@ current_jewish_populations <- data.frame(country = c("Bermuda",
                                                               150000,
                                                               43000))
 
-#Create graph
+jewish_no_war <- data.frame(year = c(1880,1900,1914,1922,1925,1931,1939,1949,1959,1969,1979,1989,1999,2009,2019,2021),
+                            population = c(7800000,10600000,13500000,14400000,14800000,15700000,16728000,18241220,19754440,21267660,22780880,24294100,25807320,27320540,28833760, 29136404)
+)
+
+world_jewish_population_2021 <- world_jewish_population %>%
+    filter(year == 2021)
+
+#Create graphs
 
 population_graph <- ggplot(data = world_jewish_population, aes(x = year, y = jewish_population_of_the_world))+
     geom_line()+
@@ -760,6 +767,10 @@ death_graph <- ggplot(data = jewish_deaths_tidy, aes(x = country , y = number, f
     scale_fill_manual(values=c("red", "black"))+
     labs(x="Country", y="Jewish People", title="Jewish Deaths Compared to pre-war Population (1939)", fill = "Type of population")+
     theme(axis.text.x = element_text(angle = 90))
+
+population_graph_no_war <- ggplot()+
+    geom_line(data = jewish_no_war, aes(x= year, y = population) )+
+    labs(x="Year", y="Jewish Population", title="Calculated Jewish Population (1880-2021)")
 
 
 
@@ -912,18 +923,9 @@ percent_jewish_alive <- function(country_name) {
 #     1513220 + 27320540 = 28833760
 
 
-jewish_no_war <- data.frame(year = c(1880,1900,1914,1922,1925,1931,1939,1949,1959,1969,1979,1989,1999,2009,2019,2021),
-                            population = c(7800000,10600000,13500000,14400000,14800000,15700000,16728000,18241220,19754440,21267660,22780880,24294100,25807320,27320540,28833760, 29136404)
-)
-
-world_jewish_population_2021 <- world_jewish_population %>%
-    filter(year == 2021)
-
-population_graph_no_war <- ggplot()+
-    geom_line(data = jewish_no_war, aes(x= year, y = population) )+
-    labs(x="Year", y="Jewish Population", title="Calculated Jewish Population (1880-2021)")
 
 
+#Creating the Shiny app
 
 ui <- fluidPage(theme = shinytheme("slate"),
                 titlePanel(h1("The Past is The Present and The Future: Visualizing Holocaust Data")),
@@ -1049,7 +1051,6 @@ ui <- fluidPage(theme = shinytheme("slate"),
                                       br(),
                                       br(),
                                       h4("See detailed information about European countries:"),
-
                                       selectInput("country_name_killed", "", c("Albania",
                                                                                "Austria",
                                                                                "Belgium",
@@ -1093,9 +1094,8 @@ ui <- fluidPage(theme = shinytheme("slate"),
                                       h4(strong("The number of Jewish people living in a European country (as of 2021) as a percent of the pre-war population:")),
                                       br(),
                                       tableOutput("population_percent_table")
+                                      ),
 
-
-                            ),
                             tabPanel(title = strong("Sources"),
                                      br(),
                                      a("Jewish Virtual Library:", href = "https://www.jewishvirtuallibrary.org/"),
