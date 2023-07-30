@@ -769,10 +769,12 @@ death_graph <- ggplot(data = jewish_deaths_tidy, aes(x = country , y = number, f
     theme(axis.text.x = element_text(angle = 90))
 
 population_graph_no_war <- ggplot()+
-    geom_line(data = jewish_no_war, aes(x= year, y = population) )+
-    labs(x="Year", y="Jewish Population", title="Calculated Jewish Population (1880-2021)")
+    geom_line(data = jewish_no_war, aes(x= year, y = population, color= "red") )+
+    labs(x="Year", y="Jewish Population", title="Calculated Jewish Population (1880-2021)")+
+    theme(legend.position = "none")
 
-
+combined_plot <- population_graph_no_war +
+    geom_line(data = world_jewish_population, aes(x = year, y = jewish_population_of_the_world))
 
 # Functions:
 
@@ -850,7 +852,7 @@ percent_jewish_alive <- function(country_name) {
         current_pop <-prettyNum(current_pop, big.mark = ",", scientific = FALSE)
         pre_war <-prettyNum(pre_war, big.mark = ",", scientific = FALSE)
         percent <- round(percent, 2)
-        print(paste("The current Jewish population of", country_name, "is", current_pop, ",", percent, "% of the pre-war population (", pre_war, ").", "*Yugoslovia dissolved in 1992, so the current Jewish population of Yugoslavia is made up of populations from Seriba, Croatia, Bosnia and Herzegovina, Macedonia, Montenegro, Slovenia, and Kosovo."))
+        print(paste("The current Jewish population of", country_name, "is", current_pop, ",", percent, "% of the pre-war population (", pre_war, ").", "*Yugoslovia dissolved in 1992, so the current Jewish population of Yugoslavia is made up of populations from Serbia, Croatia, Bosnia and Herzegovina, Macedonia, Montenegro, Slovenia, and Kosovo."))
 
     }else if (country_name == "Czechoslovakia/Czech Republic") {
         current_pop = 3900
@@ -932,12 +934,12 @@ ui <- fluidPage(theme = shinytheme("slate"),
                 sidebarLayout(
                     sidebarPanel(width = 6,
                                  title = strong("Home"),
-                                 plotlyOutput("population_graph"),
+                                 plotlyOutput("combined_plot"),
                                  br(),
                                  h4(strong("If the Holocaust hadn't happened and population trends had continued as they were from 1880-1939, the Jewish world population could have been 29,136,404 in 2021.")),
                                  h4(strong("Instead, it is 15,166,200 in 2021.")),
                                  h4(strong("A difference of 13,970,204.")),
-                                 plotlyOutput("population_graph_no_war"),
+                                 #plotlyOutput("population_graph_no_war"),
                                  br()
                     ),
                     mainPanel( width = 6,
@@ -1125,8 +1127,8 @@ ui <- fluidPage(theme = shinytheme("slate"),
 server <- function(input, output) {
     output$death_graph_percent <- renderPlotly({death_graph_percent})
     output$death_graph <- renderPlotly({death_graph})
-    output$population_graph <- renderPlotly(population_graph)
-    output$population_graph_no_war <- renderPlotly(population_graph_no_war)
+    output$combined_plot <- renderPlotly(combined_plot)
+    #output$population_graph_no_war <- renderPlotly(population_graph_no_war)
     output$population_percent_table <- renderTable(jewish_alive_percent)
     observeEvent(input$go_country_pop, {
         name_of_country <- reactive({input$country_name})
