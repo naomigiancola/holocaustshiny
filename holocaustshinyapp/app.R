@@ -1130,6 +1130,7 @@ server <- function(input, output) {
     output$combined_plot <- renderPlotly(combined_plot)
     #output$population_graph_no_war <- renderPlotly(population_graph_no_war)
     output$population_percent_table <- renderTable(jewish_alive_percent)
+
     observeEvent(input$go_country_pop, {
         name_of_country <- reactive({input$country_name})
         output$pop_table = renderTable({current_jewish_population(name_of_country())}
